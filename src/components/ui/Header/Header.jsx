@@ -2,6 +2,7 @@ import {
   AppBar,
   Box,
   Container,
+  Divider,
   Drawer,
   IconButton,
   Link,
@@ -15,11 +16,10 @@ import {
   Typography,
   useScrollTrigger,
 } from '@mui/material';
-import MovieIcon from '@mui/icons-material/Movie';
 import MenuIcon from '@mui/icons-material/Menu';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { ICON_COMPONENTS, TOP_LIST } from '../../../constants';
+import { ICON_COMPONENTS, MOVIE_LISTS, TOP_LIST } from '../../../constants';
 
 const Icon = ({ iconName }) => {
   const IconComponent = ICON_COMPONENTS[iconName];
@@ -48,6 +48,21 @@ export const Header = () => {
               <Box sx={{ width: 250 }} onClick={handleDrawerToggle}>
                 <List>
                   {TOP_LIST.map(item => (
+                    <Link key={item.title} component={RouterLink} to={item.url}>
+                      <ListItem disablePadding>
+                        <ListItemButton sx={{ textAlign: 'center' }}>
+                          <ListItemIcon>
+                            <Icon iconName={item.icon} />
+                          </ListItemIcon>
+                          <ListItemText primary={item.title} />
+                        </ListItemButton>
+                      </ListItem>
+                    </Link>
+                  ))}
+                </List>
+                <Divider />
+                <List>
+                  {MOVIE_LISTS.map(item => (
                     <Link key={item.title} component={RouterLink} to={item.url}>
                       <ListItem disablePadding>
                         <ListItemButton sx={{ textAlign: 'center' }}>
