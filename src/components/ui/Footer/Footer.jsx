@@ -10,6 +10,8 @@ export const Footer = () => {
         paddingBottom: 4,
         flexDirection: { sm: 'row' },
         justifyContent: { sm: 'space-between' },
+        alignItems: { sm: 'center' },
+        marginTop: 'auto',
       }}
     >
       <Typography variant="body2" color="text.secondary">
