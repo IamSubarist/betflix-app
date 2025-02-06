@@ -1,4 +1,10 @@
 import { createRoot } from 'react-dom/client';
-import App from './components/App.jsx';
+import { App } from './components/App.jsx';
+import { CssBaseline } from '@mui/material';
 
-createRoot(document.getElementById('root')).render(<App />);
+createRoot(document.getElementById('root')).render(
+  <>
+    <CssBaseline />
+    <App />
+  </>,
+);
