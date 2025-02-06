@@ -3,7 +3,15 @@ import React from 'react';
 
 export const Footer = () => {
   return (
-    <Stack component="footer" sx={{ paddingTop: 4, paddingBottom: 4 }}>
+    <Stack
+      component="footer"
+      sx={{
+        paddingTop: 4,
+        paddingBottom: 4,
+        flexDirection: { sm: 'row' },
+        justifyContent: { sm: 'space-between' },
+      }}
+    >
       <Typography variant="body2" color="text.secondary">
         &copy; {new Date().getFullYear()} &laquo;BetFlix&raquo; 18+
         <br />
