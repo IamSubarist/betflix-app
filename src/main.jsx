@@ -1,5 +1,13 @@
 import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.jsx';
+import { App } from './components/App.jsx';
+import { CssBaseline } from '@mui/material';
+import { Provider } from 'react-redux';
+import { store } from './app/store.js';
+import 'bear-react-carousel/dist/index.css';
 
-createRoot(document.getElementById('root')).render(<App />);
+createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <CssBaseline />
+    <App />
+  </Provider>,
+);
