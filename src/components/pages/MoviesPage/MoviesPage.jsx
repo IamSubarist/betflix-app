@@ -1,6 +1,10 @@
 import React from 'react';
 import { useMoviesQuery } from '../../../hooks/useMoviesQuery';
 import BearCarousel, { BearSlideImage } from 'bear-react-carousel';
+import { Link, Stack } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { ErrorMessage } from '../../ui/ErrorMessage/ErrorMessage';
+import { MoviesPageSkeleton } from './MoviesPageSkeleton';
 
 export const MoviesPage = () => {
   const {
@@ -13,25 +17,75 @@ export const MoviesPage = () => {
     responseCartoons,
   } = useMoviesQuery();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <MoviesPageSkeleton />;
 
-  if (hasError) return <p>Error</p>;
+  if (hasError) return <ErrorMessage />;
 
-  const serializeDataForCarousel = data => {
-    data.map(row => <BearSlideImage key={row.id}>{row.name}</BearSlideImage>);
-  };
-
+  const serializeDataForCarousel = data =>
+    data.map(row => (
+      <RouterLink key={row.id} to={`/movie/${row.kinopoiskId}`}>
+        <BearSlideImage imageUrl={row.posterUrlPreview} />
+      </RouterLink>
+    ));
   const carouselArr = [
     {
       title: 'Популярные фильмы',
       url: '/popular',
       data: serializeDataForCarousel(responsePopular.data.items),
     },
+    {
+      title: 'Лучшие фильмы',
+      url: '/best',
+      data: serializeDataForCarousel(responseBest.data.items),
+    },
+    {
+      title: 'Фильмы',
+      url: '/films',
+      data: serializeDataForCarousel(responseFilms.data.items),
+    },
+    {
+      title: 'Сериалы',
+      url: '/serials',
+      data: serializeDataForCarousel(responseSerials.data.items),
+    },
+    {
+      title: 'Мультфильмы',
+      url: '/cartoons',
+      data: serializeDataForCarousel(responseCartoons.data.items),
+    },
   ];
 
   return (
-    <div>
-      <BearCarousel data={carouselArr[0].data} />
-    </div>
+    <>
+      {carouselArr.map(carousel => (
+        <Stack key={carousel.title}>
+          <Link
+            sx={{ mt: 2, mb: 2 }}
+            variant="h4"
+            component={RouterLink}
+            to={carousel.url}
+          >
+            {carousel.title}
+          </Link>
+          <BearCarousel
+            data={carousel.data}
+            slidesPerView={1}
+            slidesPerGroup={1}
+            isEnableNavButton
+            isEnableLoop
+            isEnableAutoPlay
+            autoPlayTime={5000}
+            breakpoints={{
+              375: {
+                isEnableAutoPlay: false,
+              },
+              768: {
+                slidesPerView: 5,
+              },
+            }}
+          />
+        </Stack>
+      ))}
+    </>
   );
 };
