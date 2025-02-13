@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Stack, Typography } from '@mui/material';
 import { MoviesList } from '../../ui/MoviesList/MoviesList';
 import { ArrowBack } from '@mui/icons-material';
+import { MoviesListSkeleton } from '../../ui/MoviesListSkeleton/MoviesListSkeleton';
 
 export const MoviesListTop = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ export const MoviesListTop = () => {
   console.log(data, error, isLoading);
 
   if (error) return <p>Error</p>;
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <MoviesListSkeleton />;
 
   return (
     <>
